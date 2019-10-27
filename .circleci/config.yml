@@ -1,0 +1,30 @@
+version: 2
+
+defaults: &defaults
+  docker:
+    - image: circleci/python:3.7.0
+  working_directory: ~/project
+
+prepare_venv: &prepare_venv
+  run:
+    name: Create venv
+    command: |
+      python3 -m venv venv
+      source venv/bin/activate
+      pip install --upgrade pip
+jobs:
+  test_sentiments_analysis_model:
+    <<: *defaults
+    steps:
+      - checkout
+      - *prepare_venv
+      - run:
+          name: Install requirements
+          command: |
+            . venv/bin/activate
+            pip install -r sentiment_analysis/requirements.txt
+workflows:
+  version: 2
+  test-all:
+    jobs:
+      - test_sentiments_analysis_model
