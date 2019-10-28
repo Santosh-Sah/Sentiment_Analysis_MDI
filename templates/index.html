@@ -1,7 +1,7 @@
 <html>
 	<body>
 		<h1> Hello Santosh </h1>
-		<form action="/predict_sentiment_single_tweet_using_Logistics">
+		<form action={{url_for("sentimentsAnalysisBasedOnTweetTopicUsingLogisticRegression")}} method="post">
 			<input type="text" name="tweet">
 			
 			<button type="submit">Predict</button>
@@ -9,6 +9,5 @@
 		
 		<br/>
 		</br>
-		{{prediction_text}}
 	</body>
 </html>
