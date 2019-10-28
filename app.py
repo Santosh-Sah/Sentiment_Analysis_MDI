@@ -127,7 +127,7 @@ def sentimentsAnalysisSingleTweetUsingLogisticRegression():
     
     sentiments = mdiProjectLogisticRegressionclassifierModel.predict(sample)
     
-    return render_template("index.html", prediction_text = "Sentiment of the tweet is {}".format(sentiments))
+    return render_template("index.html", prediction_text = "Sentiment of the tweet is {}".format(sentiments[0]))
     
     return sentiments
 
