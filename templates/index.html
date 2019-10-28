@@ -1,13 +1,23 @@
+<!DOCTYPE html>
 <html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Sentiiment Prediction</title>
+		<link href="https://fonts.googlepis.com/css?family=Pacifico" rel="stylesheet" type="text/css">
+		<link href="https://fonts.googlepis.com/css?family=Arimo" rel="stylesheet" type="text/css">
+		<link href="https://fonts.googlepis.com/css?family=Hindi:300" rel="stylesheet" type="text/css">
+		<link href="https://fonts.googlepis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet" type="text/css">
+	</head>
+	
 	<body>
-		<h1> Hello Santosh </h1>
-		<form action={{url_for("sentimentsAnalysisBasedOnTweetTopicUsingLogisticRegression")}} method="post">
-			<input type="text" name="tweet">
+		<div class="login">
+			<h1> Tweet Sentiment Analysis </h1>
+			
+			<form action={{url_for("sentimentsAnalysisSingleTweetUsingLogisticRegression")}} method="post">
+			<input type="text" name="tweet" placeholder="tweet" required="required" />
 			
 			<button type="submit">Predict</button>
 		</form>
-		
-		<br/>
-		</br>
-	</body>
+		</div>
+	<body>
 </html>
