@@ -117,8 +117,8 @@ def sentimentsAnalysisBasedOnTweetTopicUsingNaiveBayes():
 def sentimentsAnalysisSingleTweetUsingLogisticRegression():
     
     #Get the tweet from UI
-    mdiProjectTweet = request.args.get("tweet")
-        
+    mdiProjectTweet = request.form.get("tweet")
+    print("aaaa", mdiProjectTweet)    
     #mdiProjectTweetList = ["This product is bad"]
     mdiProjectTweetList = [mdiProjectTweet]
     mdiProjectTweetList = mdiProjectCleanTweet(mdiProjectTweetList)
@@ -127,13 +127,15 @@ def sentimentsAnalysisSingleTweetUsingLogisticRegression():
     
     sentiments = mdiProjectLogisticRegressionclassifierModel.predict(sample)
     
+    return render_template("index.html", prediction_text = "Sentiment of the tweet is {}".format(sentiments))
+    
     return sentiments
 
 @app.route("/predict_sentiment_tweet_topic_using_Logistics", methods=['POST'])
 def sentimentsAnalysisBasedOnTweetTopicUsingLogisticRegression():
     
     #Get the tweet topic
-    mdiProjectTweetTopic = request.args.get("tweetTopic")
+    mdiProjectTweetTopic = request.form.get("tweet")
     
     #Get the tweets based on the tweet topic and save in file
     mdiProjectSearchTweetBasedOnSearchTerm(mdiProjectTweeterAuthHandler(mdiProjectGetNormalizedTweeterConfig("mdiProjectFiles/tweeterConfig.json")), mdiProjectTweetTopic)
