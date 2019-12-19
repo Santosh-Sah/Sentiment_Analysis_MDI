@@ -18,12 +18,11 @@
 		<div class="content">
 			<h1> Tweet Sentiment Analysis </h1>
 			
-			<form action={{url_for("showSentimentsAnalysisSingleTweetUsingLogisticRegression")}} method="post">
-				<button type="submit">Pridict Sentiment For Single Tweet</button>
-			</form>
-			<br/>
-			<form action={{url_for("showSentimentsAnalysisBasedOnTweetTopicUsingLogisticRegression")}} method="post">
-				<button type="submit">Pridict Sentiment For Tweet Topic</button>
+			<form action={{url_for("sentimentsAnalysisBasedOnTweetTopicUsingNaiveBayes")}} method="post">
+			
+				Enter a Tweet Topic: <input type="text" name="tweetTopic" placeholder="Tweet Topic" required="required" />
+				<button type="submit">Predict Topic</button>
+				
 			</form>
 		</div>
 	<body>
