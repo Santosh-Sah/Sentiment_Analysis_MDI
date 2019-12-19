@@ -36,8 +36,8 @@ def home():
 def sentimentsAnalysisSingleTweetUsingNaiveBayes():
     
     #Get the tweet from UI
-    mdiProjectTweet = request.args.get("tweet")
-    
+    mdiProjectTweet = request.form.get("tweet")
+  
     #Process the tweet
     porcessedTweet = mdiProjectProcessTweet(mdiProjectTweet)
     
@@ -53,13 +53,13 @@ def sentimentsAnalysisSingleTweetUsingNaiveBayes():
     #Get sentiments based on the feature words
     tweetSentiment = NaiveBayesClassifierModel.classify(featureWords)
     
-    return tweetSentiment
+    return render_template("naiveByesSingleTweet.html", prediction_text = "Sentiment of the tweet is {}".format(tweetSentiment))
 
 @app.route("/predict_sentiment_tweet_topic_using_naive_bayes", methods=['POST'])
 def sentimentsAnalysisBasedOnTweetTopicUsingNaiveBayes():
     
     #Get the tweet topic
-    mdiProjectTweetTopic = request.args.get("tweetTopic")
+    mdiProjectTweetTopic = request.form.get("tweetTopic")
     
     #Get the tweets based on the tweet topic and save in file
     mdiProjectSearchTweetBasedOnSearchTerm(mdiProjectTweeterAuthHandler(mdiProjectGetNormalizedTweeterConfig("mdiProjectFiles/tweeterConfig.json")), mdiProjectTweetTopic)
@@ -117,25 +117,23 @@ def sentimentsAnalysisBasedOnTweetTopicUsingNaiveBayes():
 def sentimentsAnalysisSingleTweetUsingLogisticRegression():
     
     #Get the tweet from UI
-    mdiProjectTweet = request.form.get("tweet")
-    print("aaaa", mdiProjectTweet)    
-    #mdiProjectTweetList = ["This product is bad"]
-    mdiProjectTweetList = [mdiProjectTweet]
-    mdiProjectTweetList = mdiProjectCleanTweet(mdiProjectTweetList)
+	mdiProjectTweet = request.form.get("tweet")  
+	
+	mdiProjectTweetList = [mdiProjectTweet]
+	mdiProjectTweetList = mdiProjectCleanTweet(mdiProjectTweetList)
     
-    sample = mdiProjectTfidfvectorizer.transform(mdiProjectTweetList).toarray()
+	sample = mdiProjectTfidfvectorizer.transform(mdiProjectTweetList).toarray()
     
-    sentiments = mdiProjectLogisticRegressionclassifierModel.predict(sample)
+	sentiments = mdiProjectLogisticRegressionclassifierModel.predict(sample)
     
-    return render_template("index.html", prediction_text = "Sentiment of the tweet is {}".format(sentiments[0]))
-    
-    return sentiments
+	return render_template("logisticRegressionSingleTweet.html", prediction_text = "Sentiment of the tweet is {}".format(sentiments[0]))
+
 
 @app.route("/predict_sentiment_tweet_topic_using_Logistics", methods=['POST'])
 def sentimentsAnalysisBasedOnTweetTopicUsingLogisticRegression():
     
     #Get the tweet topic
-    mdiProjectTweetTopic = request.form.get("tweet")
+    mdiProjectTweetTopic = request.form.get("tweetTopic")
     
     #Get the tweets based on the tweet topic and save in file
     mdiProjectSearchTweetBasedOnSearchTerm(mdiProjectTweeterAuthHandler(mdiProjectGetNormalizedTweeterConfig("mdiProjectFiles/tweeterConfig.json")), mdiProjectTweetTopic)
@@ -172,6 +170,31 @@ def sentimentsAnalysisBasedOnTweetTopicUsingLogisticRegression():
     response.headers['Access-Control-Allow-Origin'] = '*'
     
     return response
-        
+
+@app.route("/show_predict_sentiment_single_tweet_using_Logistics", methods=['POST'])
+def showSentimentsAnalysisSingleTweetUsingLogisticRegression():
+	
+	return render_template("logisticRegressionSingleTweet.html")
+
+@app.route("/show_predict_sentiment_tweet_topic_using_Logistics", methods=['POST'])
+def showSentimentsAnalysisBasedOnTweetTopicUsingLogisticRegression():
+	
+	return render_template("logisticRegressionTweetTopic.html")
+	
+@app.route("/show_predict_sentiment_single_tweet_using_Naive_Bayes", methods=['POST'])
+def showSentimentsAnalysisSingleTweetUsingNaiveBayes():
+	
+	return render_template("naiveByesSingleTweet.html")
+	
+@app.route("/show_predict_sentiment_tweet_topic_using_naive_bayes", methods=['POST'])
+def showSentimentsAnalysisBasedOnTweetTopicUsingNaiveBayes():
+	
+	return render_template("naiveByesTweetTopic.html")
+
+@app.route("/show_home_page", methods=['POST'])
+def showHomePage():
+	
+	return render_template("index.html")
+	
 if __name__ == "__main__":
     app.run(debug=True)
